@@ -46,62 +46,59 @@ export function InfoForm({ onSubmit, loading: isLoading, error: propError }: Inf
     url: ''
   });
 
-  const generateClubData = async (formValues: any) => {
-    const chatCompletion = await groq.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: "You are a helper that suggests university clubs based on student information. Return exactly one club suggestion in JSON format with name, description, and url fields."
-        },
-        {
-          role: "user",
-          content: `Suggest two clubs for a ${formValues.year} year student studying at ${formValues.university} with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
-        }
-      ],
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.5,
-      stream: false
-    });
+  // const generateClubData = async (formValues: any) => {
+  //   const chatCompletion = await groq.chat.completions.create({
+  //     messages: [
+  //       {
+  //         role: "system",
+  //         content: "You are a helper that suggests university clubs based on student information. Return exactly one club suggestion in JSON format with name, description, and url fields."
+  //       },
+  //       {
+  //         role: "user",
+  //         content: `Suggest two clubs for a ${formValues.year} year student studying at ${formValues.university} with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
+  //       }
+  //     ],
+  //     model: "llama-3.3-70b-versatile",
+  //     temperature: 0.5,
+  //     stream: false
+  //   });
 
-    const suggestion = JSON.parse(chatCompletion.choices[0]?.message?.content || '{}');
-    setClubsData({
-      name: suggestion.name || '',
-      desc: suggestion.description || '',
-      url: suggestion.url || ''
-    });
-  };
+  //   const suggestion = JSON.parse(chatCompletion.choices[0]?.message?.content || '{}');
+  //   setClubsData({
+  //     name: suggestion.name || '',
+  //     desc: suggestion.description || '',
+  //     url: suggestion.url || ''
+  //   });
+  // };
 
-  const generateLearningData = async (formValues: any) => {
-    const chatCompletion = await groq.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: "You are a helper that suggests learning resources based on student information. Return exactly three learning resources suggestion in JSON format with name, description, and url fields."
-        },
-        {
-          role: "user",
-          content: `Suggest three learning resources for a ${formValues.year} year student with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
-        }
-      ],
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.5,
-      stream: false
-    });
+  // const generateLearningData = async (formValues: any) => {
+  //   const chatCompletion = await groq.chat.completions.create({
+  //     messages: [
+  //       {
+  //         role: "system",
+  //         content: "You are a helper that suggests learning resources based on student information. Return exactly three learning resources suggestion in JSON format with name, description, and url fields."
+  //       },
+  //       {
+  //         role: "user",
+  //         content: `Suggest three learning resources for a ${formValues.year} year student with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
+  //       }
+  //     ],
+  //     model: "llama-3.3-70b-versatile",
+  //     temperature: 0.5,
+  //     stream: false
+  //   });
 
-    const suggestion = JSON.parse(chatCompletion.choices[0]?.message?.content || '{}');
-    setLearningData({
-      name: suggestion.name || '',
-      desc: suggestion.description || '',
-      url: suggestion.url || ''
-    });
-  };
+  //   const suggestion = JSON.parse(chatCompletion.choices[0]?.message?.content || '{}');
+  //   setLearningData({
+  //     name: suggestion.name || '',
+  //     desc: suggestion.description || '',
+  //     url: suggestion.url || ''
+  //   });
+  // };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    
-    const groq = new Groq({ 
-      apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY || '' 
-    });
+    console.log('Form submission started');
     
     const formElement = e.currentTarget as HTMLFormElement;
     const formDataObj = new FormData(formElement);
@@ -114,8 +111,16 @@ export function InfoForm({ onSubmit, loading: isLoading, error: propError }: Inf
       work_rights: formDataObj.get('work_rights') as string
     };
     
-    setFormData(newFormData);
-    await onSubmit(newFormData);
+    try {
+      console.log('Submitting form data:', newFormData);
+      setFormData(newFormData);
+      await onSubmit(newFormData);
+      console.log('Form submission successful');
+      formElement.reset();
+    } catch (err) {
+      console.error('Form submission error:', err);
+      setError('Failed to submit form');
+    }
   }
 
   return (

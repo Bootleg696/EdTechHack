@@ -44,7 +44,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const groq = new Groq({ apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY, dangerouslyAllowBrowser: true});
+  const groq = new Groq({ 
+    apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY, 
+    dangerouslyAllowBrowser: true 
+  });
 
   const generateSuggestions = async (formData: FormData) => {
     try {
@@ -95,13 +98,19 @@ export default function Home() {
   const handleGetStarted = () => setCurrentSection('userForm')
   
   const handleFormSubmit = async (formData: FormData) => {
+    console.log('Form submitted with data:', formData);
     setLoading(true);
     setError('');
+    
     try {
       setUserFormData(formData);
+      console.log('Generating suggestions...');
       await generateSuggestions(formData);
+      console.log('Suggestions generated, navigating...');
       setCurrentSection('opportunities');
+      console.log('Current section:', currentSection);
     } catch (err) {
+      console.error('Error:', err);
       setError('Failed to process form data');
     } finally {
       setLoading(false);
