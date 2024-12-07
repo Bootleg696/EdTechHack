@@ -52,15 +52,15 @@ const categories = [
     opportunities: [
       {
         id: 3,
-        title: 'Data Science Workshop Series',
+        title: 'Roadmap.sh',
         timeline: 'Starts 2024-06-01',
-        skills: ['Python', 'Statistics', 'ML'],
+        skills: ['Front End', 'Back End', 'Full Stack'],
       },
       {
         id: 4,
-        title: 'Web Development Bootcamp',
+        title: 'Neetcode.io',
         timeline: 'Starts 2024-07-01',
-        skills: ['HTML', 'CSS', 'JavaScript'],
+        skills: ['Data Structures','Algorithms'],
       },
     ]
   },
@@ -108,15 +108,15 @@ const categories = [
     opportunities: [
       {
         id: 7,
-        title: 'Tech Society Membership',
-        timeline: 'Ongoing',
+        title: 'UNSW CSESOC'
+        timeline: 'Closed',
         skills: ['Networking', 'Leadership', 'Tech'],
       },
       {
         id: 8,
-        title: 'Coding Club',
-        timeline: 'Weekly Meetings',
-        skills: ['Programming', 'Collaboration', 'Learning'],
+        title: 'UNSW AI Society',
+        timeline: 'Ongoing',
+        skills: ['Programming', 'AI', 'Learning'],
       },
     ]
   },
