@@ -44,7 +44,7 @@ export function InfoForm() {
         },
         {
           role: "user",
-          content: `Suggest a club for a ${formValues.year} year student studying at ${formValues.university} with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
+          content: `Suggest two clubs for a ${formValues.year} year student studying at ${formValues.university} with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
         }
       ],
       model: "llama-3.3-70b-versatile",
@@ -69,7 +69,7 @@ export function InfoForm() {
         },
         {
           role: "user",
-          content: `Suggest a learning resource for a ${formValues.year} year student with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
+          content: `Suggest three learning resources for a ${formValues.year} year student with skills in ${formValues.skills} who wants to be a ${formValues.role}.`
         }
       ],
       model: "llama-3.3-70b-versatile",

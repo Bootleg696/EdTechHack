@@ -2,54 +2,71 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Briefcase, BookOpen, Users, Award } from 'lucide-react'
 
-const opportunities = [
-  {
-    title: 'Internships',
-    description: 'Gain hands-on experience in your chosen field with internships at top companies.',
-    icon: Briefcase,
-  },
-  {
-    title: 'Learning',
-    description: 'Enhance your skills with online courses, workshops, and tutorials tailored to your career path.',
-    icon: BookOpen,
-  },
-  {
-    title: 'Programs',
-    description: 'Participate in industry programs designed to nurture and develop emerging talent.',
-    icon: Award,
-  },
-  {
-    title: 'Clubs/Society',
-    description: 'Connect with like-minded peers and industry professionals through university clubs and societies.',
-    icon: Users,
-  },
-]
+interface SuggestionData {
+  name: string;
+  desc: string;
+  url: string;
+}
 
-export default function OpportunitiesPage({ onDiscoverNow }) {
+interface OpportunitiesPageProps {
+  onDiscoverNow: (section: string) => void;
+  clubData: SuggestionData;
+  learningData: SuggestionData;
+}
+
+export default function OpportunitiesPage({ onDiscoverNow, clubData, learningData }: OpportunitiesPageProps) {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-4xl font-bold mb-8 text-center">Explore Opportunities</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {opportunities.map((opportunity) => {
-          const Icon = opportunity.icon
-          return (
-            <Card key={opportunity.title} className="bg-white/10 backdrop-blur-lg text-white hover:bg-white/20 transition-colors">
-              <CardHeader>
-                <Icon className="h-12 w-12 mb-4" />
-                <CardTitle>{opportunity.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-200">{opportunity.description}</CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Button onClick={() => onDiscoverNow(opportunity.title)} className="w-full bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
-                  Discover Now
-                </Button>
-              </CardFooter>
-            </Card>
-          )
-        })}
+    <div className="max-w-4xl mx-auto space-y-8">
+      <h2 className="text-2xl font-bold text-center">Your Opportunities</h2>
+      
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="bg-white/10 p-6 rounded-lg">
+          <h3 className="text-xl font-semibold mb-4">Suggested Clubs</h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium">{clubData.name}</h4>
+              <p className="text-gray-200">{clubData.desc}</p>
+              {clubData.url && (
+                <a 
+                  href={clubData.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-300 hover:text-blue-400 mt-2 inline-block"
+                >
+                  Learn More →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white/10 p-6 rounded-lg">
+          <h3 className="text-xl font-semibold mb-4">Learning Resources</h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium">{learningData.name}</h4>
+              <p className="text-gray-200">{learningData.desc}</p>
+              {learningData.url && (
+                <a 
+                  href={learningData.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-300 hover:text-blue-400 mt-2 inline-block"
+                >
+                  Access Resource →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
+
+      <button
+        onClick={() => onDiscoverNow('clubs')}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+      >
+        Discover More Opportunities
+      </button>
     </div>
   )
 }
