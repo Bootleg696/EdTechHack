@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import WelcomeSection from './add-info/components/WelcomeSection'
-import UserFormPage from './add-info/components/UserFormPage'
+import WelcomeSection from './components/WelcomeSection'
+import UserFormPage from './components/UserFormPage'
 import OpportunitiesPage from './components/OpportunitiesPage'
-import SpecifiedOpportunitiesPage from './add-info/components/SpecifiedOpportunities'
+import SpecifiedOpportunitiesPage from './components/SpecifiedOpportunities'
 import { Code, Laptop, GraduationCap } from 'lucide-react'
 
 export default function Home() {
