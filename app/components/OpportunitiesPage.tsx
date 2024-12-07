@@ -1,6 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Briefcase, BookOpen, Users, Award } from 'lucide-react'
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Briefcase, BookOpen, Users, Award, Calendar, Clock } from 'lucide-react'
+import LoadingScreen from './LoadingScreen'
 
 interface SuggestionData {
   name: string;
