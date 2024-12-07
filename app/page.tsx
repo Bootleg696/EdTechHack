@@ -1,16 +1,43 @@
-import Hero from "@/components/hero";
-import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+'use client'
 
-export default async function Index() {
+import { useState } from 'react'
+import WelcomeSection from './add-info/components/WelcomeSection'
+import UserFormPage from './add-info/components/UserFormPage'
+import OpportunitiesPage from './components/OpportunitiesPage'
+import SpecifiedOpportunitiesPage from './add-info/components/SpecifiedOpportunities'
+import { Code, Laptop, GraduationCap } from 'lucide-react'
+
+export default function Home() {
+  const [currentSection, setCurrentSection] = useState('welcome')
+  const [userFormData, setUserFormData] = useState({})
+
+  const handleGetStarted = () => setCurrentSection('userForm')
+  const handleFormSubmit = (formData) => {
+    setUserFormData(formData)
+    setCurrentSection('opportunities')
+  }
+  const handleDiscoverNow = (section) => {
+    setCurrentSection('specifiedOpportunities')
+  }
+
   return (
-    <>
-      <Hero />
-      <main className="flex-1 flex flex-col gap-6 px-4">
-        <h2 className="font-medium text-xl mb-4">Next steps</h2>
-        {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-      </main>
-    </>
-  );
+    <main className="min-h-screen bg-gradient-to-br from-purple-700 via-blue-800 to-indigo-900 text-white">
+      <div className="container mx-auto px-4 py-8">
+        <header className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-2">
+            <Code className="h-8 w-8" />
+            <h1 className="text-2xl font-bold">Career Horizon</h1>
+          </div>
+          <nav className="flex space-x-4">
+            <Laptop className="h-6 w-6" />
+            <GraduationCap className="h-6 w-6" />
+          </nav>
+        </header>
+        {currentSection === 'welcome' && <WelcomeSection onGetStarted={handleGetStarted} />}
+        {currentSection === 'userForm' && <UserFormPage onSubmit={handleFormSubmit} />}
+        {currentSection === 'opportunities' && <OpportunitiesPage onDiscoverNow={handleDiscoverNow} />}
+        {currentSection === 'specifiedOpportunities' && <SpecifiedOpportunitiesPage userFormData={userFormData} />}
+      </div>
+    </main>
+  )
 }
