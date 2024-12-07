@@ -46,8 +46,6 @@ export function InfoForm({ onSubmit, loading: isLoading, error: propError }: Inf
     url: ''
   });
 
-  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
   const generateClubData = async (formValues: any) => {
     const chatCompletion = await groq.chat.completions.create({
       messages: [
@@ -100,6 +98,10 @@ export function InfoForm({ onSubmit, loading: isLoading, error: propError }: Inf
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    
+    const groq = new Groq({ 
+      apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY || '' 
+    });
     
     const formElement = e.currentTarget as HTMLFormElement;
     const formDataObj = new FormData(formElement);
