@@ -108,7 +108,7 @@ const categories = [
     opportunities: [
       {
         id: 7,
-        title: 'UNSW CSESOC'
+        title: 'UNSW CSESOC',
         timeline: 'Closed',
         skills: ['Networking', 'Leadership', 'Tech'],
       },
