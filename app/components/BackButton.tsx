@@ -10,9 +10,9 @@ export default function BackButton({ to = '/' }) {
   return (
     <div className="flex justify-center mt-8">
       <Button 
-        variant="outline" 
+        variant="ghost" 
         onClick={() => router.push(to)}
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 hover:bg-transparent"
       >
         <ArrowLeft className="h-4 w-4" />
         Back
