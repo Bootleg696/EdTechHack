@@ -90,7 +90,7 @@ export default function UserFormPage({ onSubmit }) {
 
           {step >= 2 && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-4">Select your skills:</h3>
+              <h3 className="text-lg font-semibold mb-4">Select skills you will like to learn:</h3>
               <div className="grid grid-cols-2 gap-2">
                 {[...skillsByPath[formData.careerPath], ...commonSkills].map((skill) => (
                   <div key={skill} className="flex items-center space-x-2 bg-white/5 p-2 rounded">

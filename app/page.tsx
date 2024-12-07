@@ -6,6 +6,8 @@ import UserFormPage from './components/UserFormPage'
 import OpportunitiesPage from './components/OpportunitiesPage'
 import SpecifiedOpportunitiesPage from './components/SpecifiedOpportunities'
 import { Code, Laptop, GraduationCap } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import Link from 'next/link'
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState('welcome')
@@ -24,7 +26,10 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-purple-700 via-blue-800 to-indigo-900 text-white">
       <div className="container mx-auto px-4 py-8">
         <header className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-2">
+          <div 
+            className="flex items-center space-x-2 cursor-pointer" 
+            onClick={() => setCurrentSection('welcome')}
+          >
             <Code className="h-8 w-8" />
             <h1 className="text-2xl font-bold">Career Horizon</h1>
           </div>
@@ -37,6 +42,28 @@ export default function Home() {
         {currentSection === 'userForm' && <UserFormPage onSubmit={handleFormSubmit} />}
         {currentSection === 'opportunities' && <OpportunitiesPage onDiscoverNow={handleDiscoverNow} />}
         {currentSection === 'specifiedOpportunities' && <SpecifiedOpportunitiesPage userFormData={userFormData} />}
+        {currentSection !== 'welcome' && (
+          <div className="flex justify-center mt-8">
+            <Button
+              variant="outline"
+              onClick={() => {
+                switch (currentSection) {
+                  case 'userForm':
+                    setCurrentSection('welcome');
+                    break;
+                  case 'opportunities':
+                    setCurrentSection('userForm');
+                    break;
+                  case 'specifiedOpportunities':
+                    setCurrentSection('opportunities');
+                    break;
+                }
+              }}
+            >
+              Back
+            </Button>
+          </div>
+        )}
       </div>
     </main>
   )
