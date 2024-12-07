@@ -9,11 +9,24 @@ import { Button } from '@/components/ui/button'
 import { addInfo } from '../actions/info'
 import Groq from "groq-sdk";
 
-export function InfoForm() {
+interface FormData {
+  role: string;
+  year: string;
+  skills: string;
+  university: string;
+  work_rights: string;
+}
+
+interface InfoFormProps {
+  onSubmit: (formData: FormData) => Promise<void>;
+  loading: boolean;
+  error: string;
+}
+
+export function InfoForm({ onSubmit, loading: isLoading, error: propError }: InfoFormProps) {
   const router = useRouter()
-  const [error, setError] = useState<string>('')
-  const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState({
+  const [error, setError] = useState<string>(propError)
+  const [formData, setFormData] = useState<FormData>({
     role: '',
     year: '',
     skills: '',
@@ -91,46 +104,16 @@ export function InfoForm() {
     const formElement = e.currentTarget as HTMLFormElement;
     const formDataObj = new FormData(formElement);
     
-    setFormData({
+    const newFormData = {
       role: formDataObj.get('role') as string,
       year: formDataObj.get('year') as string,
       skills: formDataObj.get('skills') as string,
       university: formDataObj.get('university') as string,
       work_rights: formDataObj.get('work_rights') as string
-    });
-
-    setLoading(true);
-    setError('');
-
-    try {
-      await Promise.all([
-        generateClubData(formData),
-        generateLearningData(formData)
-      ]);
-
-      const enrichedFormData = new FormData(formElement);
-      enrichedFormData.append('club_name', clubData.name);
-      enrichedFormData.append('club_desc', clubData.desc);
-      enrichedFormData.append('club_url', clubData.url);
-      enrichedFormData.append('learning_name', learningData.name);
-      enrichedFormData.append('learning_desc', learningData.desc);
-      enrichedFormData.append('learning_url', learningData.url);
-
-      const result = await addInfo(enrichedFormData);
-
-      if (!result?.success) {
-        setError(result?.error || 'An error occurred');
-        setLoading(false);
-        return;
-      }
-
-      router.refresh();
-      setLoading(false);
-      formElement.reset();
-    } catch (err) {
-      setError('Failed to generate suggestions');
-      setLoading(false);
-    }
+    };
+    
+    setFormData(newFormData);
+    await onSubmit(newFormData);
   }
 
   return (
@@ -170,8 +153,8 @@ export function InfoForm() {
           <p className="text-sm text-red-500">{error}</p>
         )}
 
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Adding...' : 'Add Info'}
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? 'Adding...' : 'Add Info'}
         </Button>
       </form>
     </Card>
