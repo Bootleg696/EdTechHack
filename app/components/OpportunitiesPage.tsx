@@ -1,6 +1,10 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Briefcase, BookOpen, Users, Award, Calendar, Clock } from 'lucide-react'
+import LoadingScreen from './LoadingScreen'
 
 const categories = [
   {
@@ -82,6 +86,21 @@ const categories = [
 ]
 
 export default function OpportunitiesPage() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Show loading screen for 2 seconds
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <LoadingScreen />
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-4xl font-bold mb-12 text-center">Explore Opportunities</h2>

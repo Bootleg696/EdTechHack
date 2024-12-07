@@ -12,15 +12,11 @@ import { Code, Database, Layout, Server, Cpu, Globe } from 'lucide-react'
 const careerPaths = [
   { id: 'softwareEngineering', label: 'Software Engineering', icon: Code },
   { id: 'dataScience', label: 'Data Science', icon: Database },
-  { id: 'frontendEngineering', label: 'Frontend Engineering', icon: Layout },
-  { id: 'backendEngineering', label: 'Backend Engineering', icon: Server },
 ]
 
 const skillsByPath = {
   softwareEngineering: ['Java', 'Python', 'C++', 'Algorithms', 'Data Structures', 'Problem Solving'],
   dataScience: ['Python', 'R', 'SQL', 'Machine Learning', 'Statistics', 'Data Visualization'],
-  frontendEngineering: ['JavaScript', 'TypeScript', 'React', 'HTML', 'CSS', 'UI/UX Design'],
-  backendEngineering: ['Java', 'Python', 'Node.js', 'Databases', 'APIs', 'Server Management'],
 }
 
 const commonSkills = ['Critical Thinking', 'Collaboration', 'Communication', 'Decision Making', 'Creativity']
