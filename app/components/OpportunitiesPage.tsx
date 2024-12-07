@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Briefcase, BookOpen, Users, Award, Calendar, Clock } from 'lucide-react'
 import LoadingScreen from './LoadingScreen'
 
+
 const categories = [
   {
     title: 'Internships',
@@ -14,15 +15,33 @@ const categories = [
     opportunities: [
       {
         id: 1,
-        title: 'Summer Internship at Tech Co',
-        deadline: '2024-05-15',
-        skills: ['JavaScript', 'React', 'Node.js'],
+        title: 'STEP Intern at Google',
+        deadline: '2024-04-30',
+        skills: ['Python', 'Data Structures', 'Machine Learning'],
       },
       {
         id: 2,
-        title: 'Software Development Intern',
-        deadline: '2024-06-01',
-        skills: ['Python', 'Django', 'SQL'],
+        title: 'Summer Internship at Optiver',
+        deadline: '2024-07-15',
+        skills: ['C++', 'Algorithmic Trading', 'Statistics'],
+      },
+      {
+        id: 3,
+        title: 'Summer Internship at IMC',
+        deadline: '2024-07-28',
+        skills: ['Java', 'Problem Solving', 'Distributed Systems'],
+      },
+      {
+        id: 4,
+        title: 'Traineeship at PWC',
+        deadline: '2024-07-30',
+        skills: ['Accounting', 'Excel', 'Business Analysis'],
+      },
+      {
+        id: 5,
+        title: 'University Paid Internship at ATO',
+        deadline: '2024-08-15', // Randomly assigned deadline
+        skills: ['Taxation', 'Government Policy', 'Analytical Thinking'],
       },
     ]
   },
@@ -51,16 +70,34 @@ const categories = [
     description: 'Join structured development programs',
     opportunities: [
       {
-        id: 5,
-        title: 'Code for Good Hackathon',
-        deadline: '2024-07-01',
-        skills: ['Problem Solving', 'Teamwork', 'Coding'],
+        id: 1,
+        title: 'Me @ Deloitte',
+        deadline: '2024-12-31',
+        skills: ['Consulting', 'Strategic Planning', 'Team Collaboration'],
       },
       {
-        id: 6,
-        title: 'Tech Leadership Program',
-        deadline: '2024-08-01',
-        skills: ['Leadership', 'Communication', 'Tech'],
+        id: 2,
+        title: 'KPMG Foundations Program',
+        deadline: '2024-11-30',
+        skills: ['Business Analysis', 'Data Visualization', 'Communication'],
+      },
+      {
+        id: 3,
+        title: 'EY Career Compass',
+        deadline: '2025-01-15',
+        skills: ['Career Development', 'Public Speaking', 'Leadership'],
+      },
+      {
+        id: 4,
+        title: 'Microsoft Student Accelerator',
+        deadline: '2024-12-15',
+        skills: ['Cloud Computing', 'Software Development', 'AI and Machine Learning'],
+      },
+      {
+        id: 5,
+        title: 'Startmate Student Fellowship',
+        deadline: '2025-02-01',
+        skills: ['Startup Strategy', 'Entrepreneurship', 'Networking'],
       },
     ]
   },
@@ -106,25 +143,33 @@ export default function OpportunitiesPage() {
       <h2 className="text-4xl font-bold mb-12 text-center">Explore Opportunities</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {categories.map((category) => (
-          <div key={category.title} className="space-y-6">
-            <div className="flex flex-col items-center text-center gap-4 mb-6">
-              <div className="bg-white/10 p-4 rounded-full">
-                <category.icon className="h-8 w-8" />
+        {categories.map((category) => {
+          // Get 2 random opportunities from the category
+          const randomOpportunities = ['Internships', 'Programs'].includes(category.title)
+            ? category.opportunities
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 2)
+            : category.opportunities;
+
+          return (
+            <div key={category.title} className="space-y-6">
+              <div className="flex flex-col items-center text-center gap-4 mb-6">
+                <div className="bg-white/10 p-4 rounded-full">
+                  <category.icon className="h-8 w-8" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-2">{category.title}</h3>
+                  <p className="text-gray-300 text-sm">{category.description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-2xl font-semibold mb-2">{category.title}</h3>
-                <p className="text-gray-300 text-sm">{category.description}</p>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {category.opportunities.map((opportunity) => (
-                <Card 
-                  key={opportunity.id} 
-                  className="bg-white/10 backdrop-blur-lg text-white hover:bg-white/20 transition-colors"
-                >
-                  <CardHeader>
+              
+              <div className="space-y-4">
+                {randomOpportunities.map((opportunity) => (
+                  <Card 
+                    key={opportunity.id} 
+                    className="bg-white/10 backdrop-blur-lg text-white hover:bg-white/20 transition-colors"
+                  >
+                    <CardHeader>
                     <CardTitle className="text-lg">{opportunity.title}</CardTitle>
                     <CardDescription className="flex items-center text-gray-300">
                       {opportunity.deadline ? (
@@ -147,11 +192,12 @@ export default function OpportunitiesPage() {
                       ))}
                     </div>
                   </CardContent>
-                </Card>
-              ))}
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   )
